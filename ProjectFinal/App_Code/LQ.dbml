@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ProjectFinal" Class="LQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=ProjectFinal;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ProjectFinal" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.cart" Member="carts">
+    <Type Name="cart">
+      <Column Name="id_cart" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_cus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="time_cart" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="cart_detail_cart" Member="detail_carts" ThisKey="id_cart" OtherKey="id_cart" Type="detail_cart" />
+      <Association Name="cust_cart" Member="cust" ThisKey="id_cus" OtherKey="id_cus" Type="cust" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cat" Member="cats">
+    <Type Name="cat">
+      <Column Name="id_cat" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cat_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="cat_prod" Member="prods" ThisKey="id_cat" OtherKey="id_cat" Type="prod" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cust" Member="custs">
+    <Type Name="cust">
+      <Column Name="id_cus" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cus_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="cust_cart" Member="carts" ThisKey="id_cus" OtherKey="id_cus" Type="cart" />
+    </Type>
+  </Table>
+  <Table Name="dbo.img_prod" Member="img_prods">
+    <Type Name="img_prod">
+      <Column Name="id_img" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_prod" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="img_url" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="stt_img" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="prod_img_prod" Member="prod" ThisKey="id_prod" OtherKey="id_pro" Type="prod" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.prod" Member="prods">
+    <Type Name="prod">
+      <Column Name="id_cat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_pro" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pro_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="pro_price" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="prod_img_prod" Member="img_prods" ThisKey="id_pro" OtherKey="id_prod" Type="img_prod" />
+      <Association Name="prod_detail_cart" Member="detail_carts" ThisKey="id_pro" OtherKey="id_pro" Type="detail_cart" />
+      <Association Name="cat_prod" Member="cat" ThisKey="id_cat" OtherKey="id_cat" Type="cat" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.role" Member="roles">
+    <Type Name="role">
+      <Column Name="id_usrole" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_role" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="role_user_name" Member="user_names" ThisKey="id_usrole" OtherKey="id_usrole" Type="user_name" />
+    </Type>
+  </Table>
+  <Table Name="dbo.user_name" Member="user_names">
+    <Type Name="user_name">
+      <Column Name="id_usrole" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_user" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="usFulname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="user_name" Member="user_name1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="usAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="usImg" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="role_user_name" Member="role" ThisKey="id_usrole" OtherKey="id_usrole" Type="role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.detail_cart" Member="detail_carts">
+    <Type Name="detail_cart">
+      <Column Name="id_dtcart" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_cart" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_pro" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quanlity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TTprice" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="cart_detail_cart" Member="cart" ThisKey="id_cart" OtherKey="id_cart" Type="cart" IsForeignKey="true" />
+      <Association Name="prod_detail_cart" Member="prod" ThisKey="id_pro" OtherKey="id_pro" Type="prod" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
